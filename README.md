@@ -1,6 +1,6 @@
 # Phonebook API - Example Full stack open
 
-In this exercise, I implemented backend and frontend with node and react for part3 from Full Stack open. This was deploy in render, and have this link:
+In this exercise, I implemented backend and frontend with node and react for part3 from Full Stack open. This was deployed in render, and have this link:
 
 - https://fso-phonebook-cur1.onrender.com
 
