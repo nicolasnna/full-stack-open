@@ -1,4 +1,4 @@
-# Full-Stack-Open exercises solved
+# Full-Stack-Open 2024 exercises solved
 
 In this repo, I solve the different parts of course Web Development of Full-Stack-Open. 
 
