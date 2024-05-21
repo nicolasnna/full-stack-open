@@ -5,8 +5,8 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 const password = process.argv[2]
-const name = process.argv[3]
-const number = process.argv[4]
+const nameNew = process.argv[3]
+const numberNew = process.argv[4]
 
 const url = `mongodb+srv://nicolas:${password}@phonebook.kla0xmj.mongodb.net/phonebook?retryWrites=true&w=majority&appName=phonebook`
 
@@ -21,11 +21,11 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 const person = new Person({
-  "name": name, 
-  "number": number  
+  "name": nameNew, 
+  "number": numberNew  
 })
 
-if (!name || !number) {
+if (!nameNew || !numberNew) {
   Person.find({}).then(result => {
     result.forEach(person => {
       console.log(`${person.name} ${person.number}`)
@@ -33,8 +33,8 @@ if (!name || !number) {
     })
   })
 } else {
-  person.save().then(result => {
-    console.log(`Added ${name} number ${number} to phonebook`)
+  person.save().then(() => {
+    console.log(`Added ${nameNew} number ${numberNew} to phonebook`)
     mongoose.connection.close()
   })
 }

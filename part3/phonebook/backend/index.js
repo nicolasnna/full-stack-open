@@ -89,13 +89,15 @@ const getDateTime = () => {
 }
 
 // Get info 
-app.get(('/info'), (request, response) => {
-  const totalPersons = persons.length
-  const dateTime = getDateTime()
-
-  const msgSend = `<p>Phonebook has info for ${totalPersons} people</p> 
+app.get(('/info'), (request, response, next) => {
+  Person.find({}).then(result => {
+    const totalPersons = result.length
+    const dateTime = getDateTime()
+    const msgSend = `<p>Phonebook has info for ${totalPersons} people</p> 
     <p>${dateTime}</p>`
-  response.send(msgSend)
+    response.send(msgSend)
+  }).catch(error => next(error))
+  
 })
 
 // Get persons array
@@ -117,7 +119,7 @@ app.get(('/api/persons/:id'), (request, response, next) => {
 })
 // Delete specific person
 app.delete(('/api/persons/:id'), (request, response, next) => {
-  Person.findByIdAndDelete(request.params.id).then(res => {
+  Person.findByIdAndDelete(request.params.id).then(() => {
     response.status(204).end()
   }).catch(error => next(error))
 })
