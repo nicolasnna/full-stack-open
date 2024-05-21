@@ -18,7 +18,7 @@ const App = () => {
       setPersons(response)
       setPersonsFilter(response)
     })
-  }, [persons])
+  }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -45,6 +45,17 @@ const App = () => {
           // Notification message
           setMessage(`Added ${personToAdd.name}`)
           setNotificationStyle({color: 'green'})
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          const preTagContent = error.response.data.match(/<pre>([\s\S]*?)<\/pre>/i)[1]
+          const validationErrorText = preTagContent.split('<br>')[0]
+          const cleanedErrorText = validationErrorText.replace('ValidationError: ', '')
+
+          setMessage(cleanedErrorText)
+          setNotificationStyle({color: 'red'})
           setTimeout(() => {
             setMessage(null)
           }, 5000)

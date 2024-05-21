@@ -18,7 +18,7 @@ const App = () => {
       setPersons(response)
       setPersonsFilter(response)
     })
-  }, [persons])
+  }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
