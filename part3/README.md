@@ -4,7 +4,7 @@ In this folder, I upload the answers of exercises from part 3, `Programming a se
 
 Exercises:
 
-- 3.1 - 3: phonebook 
+- 3.1 - 3.21: phonebook 
 
 # Phonebook
 
@@ -18,13 +18,15 @@ The repo GitHub for deploy in render is:
 
 # Run locally 
 
-This app was configured to run in port 3001, and you can start dev mode with this:
+This app was configured to run in port arbitrary, and you can start dev mode with this:
 
 ```
 cd ../phonebook/backend
 npm install
+```
+Also need to set environment variables how as `MONGODB_URI` and `PORT`. 
+```
 npm run dev
 ```
-
 
 Source: https://fullstackopen.com/en/part3
