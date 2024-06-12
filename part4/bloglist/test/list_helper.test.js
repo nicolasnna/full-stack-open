@@ -65,4 +65,12 @@ describe('Most Likes', () => {
     const result = listHelper.mostLikes(listWithMultipleBlogs)
     assert.deepStrictEqual(result, expected)
   })
+
 })
+describe('Search id by title', () => {
+  test('When blog exist', () =>{
+    const result = listHelper.searchIdByTitle(listWithMultipleBlogs, listWithMultipleBlogs[0].title)
+    assert.strictEqual(result, listWithMultipleBlogs[0].id)
+  })
+})
+

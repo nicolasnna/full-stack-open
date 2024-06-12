@@ -5,6 +5,7 @@ const assert = require('node:assert')
 const app = require('../index')
 const Blog = require('../models/blog')
 const testHelper = require('./test_helper')
+const listHelper = require('../utils/list_helper')
 
 const api = supertest(app)
 
@@ -43,7 +44,7 @@ describe.only('When there is initially some blogs saved', () => {
     })
   })
 
-  describe.only('Add a specific blog', () => {
+  describe('Add a specific blog', () => {
     test('Added a new blog', async () => {
       const newBlog = { 
         title: 'nwe blogs uperduper',
@@ -106,6 +107,43 @@ describe.only('When there is initially some blogs saved', () => {
     })
   })
 
+  describe.only('delete a specific blog', () => {
+    test.only('deleted a specific blog by id', async () => {
+      const blogToDelete = 'React patterns'
+      const blogsSaved = await api.get('/api/blogs')
+      const idBlogToDelete = listHelper.searchIdByTitle(blogsSaved.body, blogToDelete)
+      
+      await api
+        .delete(`/api/blogs/${idBlogToDelete}`)
+        .expect(204)
+
+    })
+  })
+
+  describe.only('Modify a specific blog', () => {
+    test.only('Modify a specific blog by id', async () => {
+      const blogToModify = 'React patterns'
+      const bodyModify =  {
+        title: "React patterns",
+        author: "Arturo chan",
+        url: "https://reactpatterns.new.com/",
+        likes: 10,
+      }
+      const blogsSaved = await api.get('/api/blogs')
+      const blogId = listHelper.searchIdByTitle(blogsSaved.body, blogToModify)
+      await api
+        .put(`/api/blogs/${blogId}`)
+        .send(bodyModify)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+      
+      // Verify if data is saved
+      const blogsSavedUpdate = await api.get('/api/blogs')
+      const blogUpdate = blogsSavedUpdate.body.find(blog => blog.id === blogId)
+      delete blogUpdate.id
+      assert.deepEqual(blogUpdate, bodyModify)
+    })
+  })
 
 })
 

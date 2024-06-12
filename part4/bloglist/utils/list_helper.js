@@ -49,10 +49,18 @@ const mostLikes = (blogs) => {
   return maxLikesAuthor
 }
 
+const searchIdByTitle = (blogs, title) => {
+  const findBlog = blogs.find((blog) => blog.title === title)
+  if (!findBlog.id){
+    return -1
+  }
+  return findBlog.id
+} 
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
   mostBlogs,
-  mostLikes
+  mostLikes,
+  searchIdByTitle
 }
