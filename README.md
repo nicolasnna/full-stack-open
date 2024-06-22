@@ -8,7 +8,7 @@ Status of development:
 - [x] **part1**: Introduction to React
 - [x] **part2**: Communicating with server
 - [x] **part3**: Programming a server with NodeJS and Express
-- [ ] **part4**: Testing Express servers, user administration
+- [x] **part4**: Testing Express servers, user administration
 - [ ] **part5**: Testing React apps
 - [ ] **part6**: Advanced state management
 - [ ] **part7**: React router, custom hooks, styling app with CSS and webpack

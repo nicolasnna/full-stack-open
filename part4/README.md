@@ -4,7 +4,7 @@ In this folder, I upload the answers of exercises from part 4, `Testing Express 
 
 Exercises:
 
-- 4.1 - : bloglist 
+- 4.1 - 4.23: bloglist 
 
 
 Source: https://fullstackopen.com/en/part4
