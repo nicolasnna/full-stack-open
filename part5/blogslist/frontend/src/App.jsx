@@ -4,7 +4,7 @@ import Login from './components/Login'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import CreateBlog from './components/CreateBlog'
+import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
 const App = () => {
@@ -94,7 +94,13 @@ const App = () => {
     }
   }
 
+  const addLikes = async (newBlog, id) => {
+    await blogService.update(newBlog, id)
+  }
 
+  const removeBlog = async (id) => {
+    await blogService.deleteBlog(id)
+  }
 
   if (user===null) {
     return (
@@ -126,12 +132,18 @@ const App = () => {
         {user.name} <button onClick={handleLogout}>Logout</button>
       </p>
       <Togglable buttonLabelShow={"Create new"} ref={blogFormRef}>
-        <CreateBlog
+        <BlogForm
           createNewBlog={createNewBlog}
         />
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} username={user.username}/>
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          username={user.username}
+          addLike={addLikes}
+          removeBlog={removeBlog}
+        />
       )}
     </div>
   )

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import PropTypes from 'prop-types'
 
-const CreateBlog = ({
+const BlogForm = ({
   createNewBlog
 }) => {
   const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
@@ -29,6 +29,7 @@ const CreateBlog = ({
               value={newBlog.title}
               name="Title"
               onChange={onChangeTitle}
+              placeholder="input title"
             />
         </div>
         <div>
@@ -38,6 +39,7 @@ const CreateBlog = ({
               value={newBlog.author}
               name="Author"
               onChange={onChangeAuthor}
+              placeholder="input author"
             />
         </div>
         <div>
@@ -47,6 +49,7 @@ const CreateBlog = ({
               value={newBlog.url}
               name="Url"
               onChange={onChangeUrl}
+              placeholder="input url"
             />
         </div>
         <button type="submit">create</button>
@@ -55,8 +58,8 @@ const CreateBlog = ({
   )
 }
 
-CreateBlog.propTypes ={
+BlogForm.propTypes ={
   createNewBlog: PropTypes.func
 }
 
-export default CreateBlog
+export default BlogForm

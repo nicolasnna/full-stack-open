@@ -1,8 +1,7 @@
 import { useState } from "react"
-import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, username }) => {
+const Blog = ({ blog, username, addLike, removeBlog }) => {
   const [visible, setVisible] = useState(false)
   const [buttonLabel, setButtonLabel] = useState('show')
   const [likes, setLikes] = useState(blog.likes)
@@ -29,8 +28,7 @@ const Blog = ({ blog, username }) => {
       likes: blog.likes + 1,
       user: blog.user.id
     }
-    
-    await blogService.update(blogUpdate, blog.id)
+    addLike(blogUpdate, blog.id)
     setLikes(likes+1)
   }
 
@@ -40,7 +38,7 @@ const Blog = ({ blog, username }) => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
       setIsDeleted(true)
       try {
-        await blogService.deleteBlog(blog.id)
+        removeBlog(blog.id)
       } catch {
         setIsDeleted(false)
       }
@@ -50,30 +48,40 @@ const Blog = ({ blog, username }) => {
   if (!isDeleted) {
     return (
     <div style={blogStyle}>
-      {blog.title}
-      <button onClick={clickShow}>{buttonLabel}</button>
-      <div style={showVisible}>
+      <div className="blog_header">
+        {blog.title} {blog.author}
+        <button onClick={clickShow}>
+          {buttonLabel}
+        </button>
+      </div>
+      <div style={showVisible} className="blog_show">
         <div>
           {blog.url}
         </div>
         <div>
           {likes}
-          <button onClick={updateLikes}>like</button>
+          <button 
+            onClick={updateLikes}
+            placeholder='Button add like'
+            >
+            like
+          </button>
         </div>
         <div>
-          {blog.author}
+          {blog.user !== null && blog.user.name}
         </div>
         <button style={showDelete} onClick={deleteBlog}>Delete</button>
       </div>
     </div>
     )
   }
-
 }
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  username: PropTypes.string 
+  username: PropTypes.string, 
+  addLike: PropTypes.func,
+  removeBlog: PropTypes.func
 }
 
 export default Blog

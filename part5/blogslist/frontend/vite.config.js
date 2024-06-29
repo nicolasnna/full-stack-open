@@ -12,4 +12,10 @@ export default defineConfig({
       },
     },
   },
+  // for test
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './testSetup.js', 
+  }
 })
