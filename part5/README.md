@@ -4,7 +4,7 @@ In this folder, I upload the answers of exercises from part 5, `Testing React ap
 
 Exercises:
 
-- 5.1 - 5.: bloglist 
+- 5.1 - 5.23: bloglist 
 
 
 Source: https://fullstackopen.com/en/part5

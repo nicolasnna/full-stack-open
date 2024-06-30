@@ -9,7 +9,7 @@ Status of development:
 - [x] **part2**: Communicating with server
 - [x] **part3**: Programming a server with NodeJS and Express
 - [x] **part4**: Testing Express servers, user administration
-- [ ] **part5**: Testing React apps
+- [x] **part5**: Testing React apps
 - [ ] **part6**: Advanced state management
 - [ ] **part7**: React router, custom hooks, styling app with CSS and webpack
 - [ ] **part8**: GraphQL

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, username, addLike, removeBlog }) => {
+const Blog = ({ blog, user, addLike, removeBlog }) => {
   const [visible, setVisible] = useState(false)
   const [buttonLabel, setButtonLabel] = useState('show')
   const [likes, setLikes] = useState(blog.likes)
@@ -16,6 +16,7 @@ const Blog = ({ blog, username, addLike, removeBlog }) => {
   }
 
   const showVisible = { display: visible ? '' : 'none' }
+  const isSameUser = (blog.user.id === user.id) || (blog.user === user.id)
 
   const clickShow = () => {
     setVisible(!visible)
@@ -26,13 +27,11 @@ const Blog = ({ blog, username, addLike, removeBlog }) => {
     const blogUpdate = {
       ...blog,
       likes: blog.likes + 1,
-      user: blog.user.id
+      user: blog.user.id || blog.user
     }
     addLike(blogUpdate, blog.id)
     setLikes(likes+1)
   }
-
-  const showDelete = { display: blog.user.username === username ? '' : 'none' }
 
   const deleteBlog = async() => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
@@ -47,7 +46,7 @@ const Blog = ({ blog, username, addLike, removeBlog }) => {
 
   if (!isDeleted) {
     return (
-    <div style={blogStyle}>
+    <div style={blogStyle} data-testid="blog card">
       <div className="blog_header">
         {blog.title} {blog.author}
         <button onClick={clickShow}>
@@ -68,9 +67,9 @@ const Blog = ({ blog, username, addLike, removeBlog }) => {
           </button>
         </div>
         <div>
-          {blog.user !== null && blog.user.name}
+          {blog.user !== null && user.name}
         </div>
-        <button style={showDelete} onClick={deleteBlog}>Delete</button>
+        {isSameUser  && <button onClick={deleteBlog}>Delete</button>}
       </div>
     </div>
     )
@@ -79,7 +78,7 @@ const Blog = ({ blog, username, addLike, removeBlog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  username: PropTypes.string, 
+  user: PropTypes.object, 
   addLike: PropTypes.func,
   removeBlog: PropTypes.func
 }

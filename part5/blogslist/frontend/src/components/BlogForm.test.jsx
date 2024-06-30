@@ -16,9 +16,9 @@ describe('<BlogForm />', () => {
     }
 
     render(<BlogForm createNewBlog={createNewBlog}/>)
-    const inputTitle = screen.getByPlaceholderText('input title')
-    const inputAuthor = screen.getByPlaceholderText('input author')
-    const inputUrl = screen.getByPlaceholderText('input url')
+    const inputTitle = screen.getByTestId('input title')
+    const inputAuthor = screen.getByTestId('input author')
+    const inputUrl = screen.getByTestId('input url')
     const sendButton = screen.getByText('create')
 
     await user.type(inputTitle, blogToAdd.title)

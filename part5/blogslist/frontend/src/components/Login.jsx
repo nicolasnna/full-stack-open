@@ -11,6 +11,7 @@ const Login = ({handleLogin, username, password,onChangeUsername, onChangePasswo
               value={username}
               name="Username"
               onChange={onChangeUsername}
+              data-testid='input username'
             />
         </div>
         <div>
@@ -20,6 +21,7 @@ const Login = ({handleLogin, username, password,onChangeUsername, onChangePasswo
               value={password}
               name="Password"
               onChange={onChangePassword}
+              data-testid='input password'
             />
         </div>
         <button type="submit">login</button>

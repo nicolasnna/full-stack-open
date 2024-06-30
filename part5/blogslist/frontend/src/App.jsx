@@ -29,6 +29,7 @@ const App = () => {
       setBlogs( blogs.sort(sortBlogs) )
     )
   }, [])
+ 
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -96,6 +97,13 @@ const App = () => {
 
   const addLikes = async (newBlog, id) => {
     await blogService.update(newBlog, id)
+    const copyList = [...blogs]
+    copyList.forEach(blog => {
+      if (blog.id === id){
+        blog.likes = blog.likes +1
+      }
+    })   
+    setBlogs(copyList.sort(sortBlogs))
   }
 
   const removeBlog = async (id) => {
@@ -140,7 +148,7 @@ const App = () => {
         <Blog 
           key={blog.id} 
           blog={blog} 
-          username={user.username}
+          user={user}
           addLike={addLikes}
           removeBlog={removeBlog}
         />

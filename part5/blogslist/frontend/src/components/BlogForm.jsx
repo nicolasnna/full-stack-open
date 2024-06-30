@@ -29,7 +29,7 @@ const BlogForm = ({
               value={newBlog.title}
               name="Title"
               onChange={onChangeTitle}
-              placeholder="input title"
+              data-testid="input title"
             />
         </div>
         <div>
@@ -39,7 +39,7 @@ const BlogForm = ({
               value={newBlog.author}
               name="Author"
               onChange={onChangeAuthor}
-              placeholder="input author"
+              data-testid="input author"
             />
         </div>
         <div>
@@ -49,7 +49,7 @@ const BlogForm = ({
               value={newBlog.url}
               name="Url"
               onChange={onChangeUrl}
-              placeholder="input url"
+              data-testid="input url"
             />
         </div>
         <button type="submit">create</button>
