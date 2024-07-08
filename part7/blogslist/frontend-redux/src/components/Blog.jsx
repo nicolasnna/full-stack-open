@@ -1,11 +1,14 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBlogById, likeBlog } from "../reducers/blogsReducer";
+import { Link } from "react-router-dom";
 
-const Blog = ({ blog, addLike, removeBlog }) => {
+const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false);
   const [buttonLabel, setButtonLabel] = useState("show");
   const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   const blogStyle = {
     paddingTop: 10,
@@ -28,19 +31,19 @@ const Blog = ({ blog, addLike, removeBlog }) => {
       ...blog,
       user: blog.user.id || blog.user,
     };
-    addLike(blogUpdate);
+    dispatch(likeBlog(blogUpdate));
   };
 
   const deleteBlog = async () => {
     if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
-      removeBlog(blog.id);
+      dispatch(deleteBlogById(blog.id));
     }
   };
 
   return (
     <div style={blogStyle} data-testid="blog card">
       <div className="blog_header">
-        {blog.title} {blog.author}
+        <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
         <button onClick={clickShow}>{buttonLabel}</button>
       </div>
       <div style={showVisible} className="blog_show">
@@ -60,8 +63,6 @@ const Blog = ({ blog, addLike, removeBlog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  addLike: PropTypes.func,
-  removeBlog: PropTypes.func,
 };
 
 export default Blog;

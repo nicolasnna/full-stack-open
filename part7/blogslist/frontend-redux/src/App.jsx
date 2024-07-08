@@ -1,108 +1,49 @@
-import { useEffect, useRef } from "react";
-import Blog from "./components/Blog";
-import Login from "./components/Login";
-import Notification from "./components/Notification";
-import BlogForm from "./components/BlogForm";
-import Togglable from "./components/Togglable";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNotification } from "./reducers/notificationReducer";
-import {
-  createBlog,
-  deleteBlogById,
-  initializeBlogs,
-  likeBlog,
-} from "./reducers/blogsReducer";
-import { clearLogin } from "./reducers/loginReducer";
-import { initializeUser, loginUser, logoutUser } from "./reducers/userReducer";
+import { initializeBlogs } from "./reducers/blogsReducer";
+import { initializeUser } from "./reducers/userReducer";
+import { Route, Routes, useMatch } from "react-router-dom";
+import UserList from "./views/UserList";
+import { initializeUserList } from "./reducers/userListReducer";
+import UserInfo from "./views/UserInfo";
+import BlogInfo from "./views/BlogInfo";
+import Home from "./views/Home";
+import Menu from "./components/Menu";
+import Notification from "./components/Notification";
 
 const App = () => {
-  const blogs = useSelector((state) => state.blogs);
-  const login = useSelector((state) => state.login);
   const user = useSelector((state) => state.user);
+  const userList = useSelector((state) => state.userList);
+  const blogs = useSelector((state) => state.blogs);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(initializeBlogs());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(initializeUser());
+    dispatch(initializeUserList());
   }, [dispatch]);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const matchUsers = useMatch("/users/:id");
+  const userSelected = matchUsers
+    ? userList.find((u) => u.id === String(matchUsers.params.id))
+    : null;
 
-    try {
-      dispatch(loginUser(login));
-      dispatch(clearLogin());
-    } catch (exception) {
-      dispatch(createNotification("Wrong credentials", "red", 3));
-    }
-  };
-
-  const blogFormRef = useRef();
-
-  const handleLogout = (event) => {
-    event.preventDefault();
-    dispatch(logoutUser());
-  };
-
-  const createNewBlog = async (newObject) => {
-    try {
-      dispatch(createBlog(newObject));
-      blogFormRef.current.toggleVisibility();
-      // Notify that is created
-      dispatch(
-        createNotification(
-          `a new blog '${newObject.title}' by ${newObject.author} has been added`,
-          "green",
-          3
-        )
-      );
-    } catch (exception) {
-      dispatch(
-        createNotification(`Error for create blog: ${exception}`, "red", 3)
-      );
-    }
-  };
-
-  const addLikes = async (blogUpdate) => {
-    dispatch(likeBlog(blogUpdate));
-  };
-
-  const removeBlog = async (id) => {
-    dispatch(deleteBlogById(id));
-  };
-
-  if (user === null) {
-    return (
-      <div>
-        <Notification />
-        <h2>Login in to application</h2>
-        <Login handleLogin={handleLogin} />
-      </div>
-    );
-  }
+  const matchBlogs = useMatch("/blogs/:id");
+  const blogSelected = matchBlogs
+    ? blogs.find((b) => b.id === String(matchBlogs.params.id))
+    : null;
 
   return (
     <div>
+      {user && <Menu />}
       <Notification />
-      <h2>blogs</h2>
-      <p>
-        {user.name} <button onClick={handleLogout}>Logout</button>
-      </p>
-      <Togglable buttonLabelShow={"Create new"} ref={blogFormRef}>
-        <BlogForm createNewBlog={createNewBlog} />
-      </Togglable>
-      {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          addLike={addLikes}
-          removeBlog={removeBlog}
-        />
-      ))}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<UserList />} />
+        <Route path="/users/:id" element={<UserInfo user={userSelected} />} />
+        <Route path="/blogs/:id" element={<BlogInfo blog={blogSelected} />} />
+      </Routes>
     </div>
   );
 };
