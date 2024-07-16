@@ -8,8 +8,29 @@ import { initializeUserList } from "./reducers/userListReducer";
 import UserInfo from "./views/UserInfo";
 import BlogInfo from "./views/BlogInfo";
 import Home from "./views/Home";
-import Menu from "./components/Menu";
+import Navbar from "./components/Navbar";
 import Notification from "./components/Notification";
+import { Container } from '@mui/material'
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
+
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -35,16 +56,18 @@ const App = () => {
     : null;
 
   return (
-    <div>
-      {user && <Menu />}
-      <Notification />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/users" element={<UserList />} />
-        <Route path="/users/:id" element={<UserInfo user={userSelected} />} />
-        <Route path="/blogs/:id" element={<BlogInfo blog={blogSelected} />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container>
+        {user && <Navbar />}
+        <Notification />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/users" element={<UserList />} />
+          <Route path="/users/:id" element={<UserInfo user={userSelected} />} />
+          <Route path="/blogs/:id" element={<BlogInfo blog={blogSelected} />} />
+        </Routes>
+      </Container>
+    </ThemeProvider>
   );
 };
 

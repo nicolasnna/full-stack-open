@@ -8,6 +8,6 @@ Exercises:
 - 7.7: country-hook
 - 7.8: ultimate-hooks
 - 7.9 - 7.13: bloglist-query
-- 7.9 - 7.17: bloglist-redux
+- 7.9 - 7.21: bloglist-redux
 
 Source: https://fullstackopen.com/en/part7

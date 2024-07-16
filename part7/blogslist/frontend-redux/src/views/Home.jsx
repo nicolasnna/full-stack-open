@@ -5,6 +5,7 @@ import { clearLogin } from "../reducers/loginReducer";
 import Login from "../components/Login";
 
 import BlogList from "./BlogList";
+import { Box, Typography } from "@mui/material";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,10 +33,12 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <h2>Blogs</h2>
+    <>
+      <Box component="section" paddingTop={2}>
+        <Typography variant="h4">Blogs</Typography>
+      </Box>
       <BlogList />
-    </div>
+    </>
   );
 };
 

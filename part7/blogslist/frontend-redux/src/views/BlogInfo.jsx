@@ -1,10 +1,14 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { addComentBlog } from "../reducers/blogsReducer"
+import { useDispatch, useSelector } from "react-redux"
+import { addComentBlog, deleteBlogById, likeBlog } from "../reducers/blogsReducer"
+import { useNavigate } from "react-router-dom"
 
 const BlogInfo = ({ blog }) =>{
   const [comment, setComment] = useState('')
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+  const isSameUser = blog.user.id === user.id || blog.user === user.id;
+  const navigate = useNavigate()
 
   const onChangeComment = (e) => {
     e.preventDefault()
@@ -20,17 +24,33 @@ const BlogInfo = ({ blog }) =>{
     }
   }
 
+  const deleteBlog = async () => {
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+      dispatch(deleteBlogById(blog.id));
+      navigate('/')
+    }
+  };
+
+  const updateLikes = async () => {
+    const blogUpdate = {
+      ...blog,
+      user: blog.user.id || blog.user,
+    };
+    dispatch(likeBlog(blogUpdate));
+  };
+
   return (
     <div>
       <h2>{blog.title}</h2>
       <a href={blog.url}>{blog.url}</a>
       <div>
         {blog.likes} likes 
-        <button>like</button>
+        <button onClick={updateLikes}>like</button>
       </div>
       <div>
         added by {blog.author}
       </div>
+      {isSameUser && <button onClick={deleteBlog}>Delete</button>}
       <h3>comments</h3>
       <form onSubmit={addComment}>
         <input name='comment' value={comment} type="text" onChange={onChangeComment}/>

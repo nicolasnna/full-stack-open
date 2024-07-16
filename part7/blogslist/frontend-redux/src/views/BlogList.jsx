@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { createBlog } from "../reducers/blogsReducer";
 import { createNotification } from "../reducers/notificationReducer";
+import { Paper, Table, TableBody, TableContainer } from '@mui/material'
 
 const BlogList = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -31,14 +32,20 @@ const BlogList = () => {
   };
 
   return (
-    <div>
+    <>
       <Togglable buttonLabelShow={"Create new"} ref={blogFormRef}>
         <BlogForm createNewBlog={createNewBlog} />
       </Togglable>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
-    </div>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            {blogs.map((blog) => (
+              <Blog key={blog.id} blog={blog} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
