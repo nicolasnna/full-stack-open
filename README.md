@@ -11,7 +11,7 @@ Status of development:
 - [x] **part4**: Testing Express servers, user administration
 - [x] **part5**: Testing React apps
 - [x] **part6**: Advanced state management
-- [ ] **part7**: React router, custom hooks, styling app with CSS and webpack
+- [x] **part7**: React router, custom hooks, styling app with CSS and webpack
 - [ ] **part8**: GraphQL
 
 

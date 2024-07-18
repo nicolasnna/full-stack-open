@@ -1,20 +1,26 @@
+import { Box, List, ListItem, ListItemIcon, Typography } from "@mui/material"
+import FeedIcon from '@mui/icons-material/Feed';
+
 const UserInfo = ({ user }) => {
   if(!user){
     return null
   }
 
   return(
-    <div>
-      <h2>{user.name}</h2>
-      <h3>Added blogs</h3>
-      <ul>
+    <Box marginY={2}>
+      <Typography variant="h4">{user.name}</Typography>
+      <Typography variant="h6">Added blogs</Typography>
+      <List>
         {user.blogs.map(b => (
-          <li key={b.id}>
+          <ListItem key={b.id}>
+            <ListItemIcon>
+              <FeedIcon/>
+            </ListItemIcon>
             {b.title}
-          </li>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   )
 }
 
