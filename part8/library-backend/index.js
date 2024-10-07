@@ -123,7 +123,6 @@ const typeDefs = `
     title: String!
     published: Int!
     author: String!
-    bornAuthor: Int
     id: ID!
     genres: [String!]
   }
@@ -151,36 +150,42 @@ const resolvers = {
       return genresFilter;
     },
     allAuthors: () => {
-      const arrayAuthor = books.map((b) => b.author);
-      const uniqueArray = [...new Set(arrayAuthor)];
-      const response = uniqueArray.map((a) => ({
-        name: a,
-        bookCount: arrayAuthor.filter((array) => array === a).length,
-        born: arrayAuthor[0].bornAuthor,
+      const response = authors.map((a) => ({
+        ...a,
+        bookCount: books.filter((b) => b.author === a.name).length,
       }));
       return response;
     },
   },
   Mutation: {
     addBook: (root, args) => {
-      const findAuthor = books.find((b) => b.author === args.author);
+      if (!authors.find((a) => a.name === args.author)) {
+        const newAuthor = {
+          name: args.author,
+          id: uuid(),
+          born: null,
+        };
+        authors = authors.concat(newAuthor);
+      }
       const newBook = {
         ...args,
         id: uuid(),
-        bornAuthor: findAuthor ? findAuthor.bornAuthor : null,
       };
       books = books.concat(newBook);
       return newBook;
     },
     editAuthor: (root, args) => {
-      if (!books.find((b) => b.author === args.name)) {
+      if (!authors.find((a) => a.name === args.name)) {
         return null;
       }
-      const newBooks = books.map((b) =>
-        b.author === args.name ? { ...b, bornAuthor: args.setBornTo } : b
+      authors = authors.map((a) =>
+        a.name === args.name ? { name: args.name, born: args.setBornTo } : a
       );
-      books = newBooks;
-      return { name: args.name, born: args.setBornTo };
+      return {
+        name: args.name,
+        born: args.setBornTo,
+        bookCount: books.filter((b) => b.author === args.name).length,
+      };
     },
   },
 };
