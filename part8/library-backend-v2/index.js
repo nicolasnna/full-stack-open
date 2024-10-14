@@ -2,6 +2,7 @@ require("dotenv").config()
 const { ApolloServer } = require("@apollo/server")
 const { startStandaloneServer } = require("@apollo/server/standalone")
 const mongoose = require("mongoose")
+mongoose.set("strictQuery", false)
 const Book = require("./models/book")
 const Author = require("./models/author")
 const { UserInputError } = require("apollo-server")
@@ -97,13 +98,13 @@ const resolvers = {
     },
     allBooks: async (root, args) => {
       if (!args.author && !args.genre) {
-        const booksArray = await Book.find({})
+        const booksArray = await Book.find({}).populate("author")
         return booksArray
       }
 
       const genresFilter = await Book.find({
         genres: args.genre,
-      })
+      }).populate("author")
 
       return genresFilter
     },
