@@ -4,8 +4,9 @@ import Books from "./components/Books"
 import NewBook from "./components/NewBook"
 import { EditAuthor } from "./components/EditAuthor"
 import Login from "./components/Login"
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, useSubscription } from "@apollo/client"
 import Recommendation from "./components/Recommendation"
+import { BOOK_ADDED } from "./queries"
 
 const App = () => {
   const [page, setPage] = useState("authors")
@@ -17,6 +18,12 @@ const App = () => {
       setToken(localStorage.getItem("library-user-token"))
     }
   }, [])
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      console.log(data)
+    },
+  })
 
   const logout = () => {
     setToken(null)

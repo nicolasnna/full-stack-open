@@ -12,7 +12,7 @@ Status of development:
 - [x] **part5**: Testing React apps
 - [x] **part6**: Advanced state management
 - [x] **part7**: React router, custom hooks, styling app with CSS and webpack
-- [ ] **part8**: GraphQL
+- [x] **part8**: GraphQL
 
 
 
