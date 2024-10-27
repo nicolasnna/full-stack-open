@@ -13,6 +13,7 @@ Status of development:
 - [x] **part6**: Advanced state management
 - [x] **part7**: React router, custom hooks, styling app with CSS and webpack
 - [x] **part8**: GraphQL
+- [ ] **part9**: TypeScript
 
 
 

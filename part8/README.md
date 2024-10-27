@@ -1,6 +1,6 @@
 # Exercises part8 Full-Stack-Open
 
-In this folder, I upload the answers of exercises from part 9, `GraphQL`.
+In this folder, I upload the answers of exercises from part 8, `GraphQL`.
 
 Exercises:
 
